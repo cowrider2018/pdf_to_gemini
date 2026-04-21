@@ -3,18 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Gemini Injector</title>
+  <title>Gemini PDF Injector</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
   <div class="container">
-    <h3>Gemini Injector</h3>
-    <img id="preview" alt="example preview" style="width:100%;height:auto;border:1px solid #ddd;margin-bottom:8px" />
+    <h3>Gemini PDF 上傳</h3>
+    <div class="field">
+      <label>本地 PDF 檔案</label>
+      <input id="pdfFile" type="file" accept="application/pdf" />
+    </div>
+    <div class="field">
+      <label>頁碼（例如 1 或 1,3-4）</label>
+      <input id="pages" type="text" placeholder="1,3-4" value="1" />
+    </div>
     <div class="controls">
       <label><input type="checkbox" id="doSend" checked> 送出（Send）</label>
-      <div style="display:flex;gap:8px">
-        <button id="insertImageBtn">插入 example.png</button>
-      </div>
+      <button id="uploadPdfBtn">上傳 PDF 並插入圖片</button>
     </div>
     <div id="status" class="status"></div>
   </div>

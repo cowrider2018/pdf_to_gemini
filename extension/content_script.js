@@ -17,6 +17,11 @@
             sendResponse({ result: 'ok' });
             return true;
           }
+          if (message.action === 'inject_image_data' || message.imageData) {
+            insertImageDataToGemini(message.imageData, { send: !!message.send });
+            sendResponse({ result: 'ok' });
+            return true;
+          }
           if (message.action === 'inject_image' || message.image) {
             const imageName = message.image || 'example.png';
             insertImageToGemini(imageName, { send: !!message.send });
@@ -88,6 +93,30 @@
       injectImageFile(editor, file, opts);
     })
     .catch(err => console.error('failed to load extension image', err));
+}
+
+function insertImageDataToGemini(dataUrl, opts) {
+  if (!dataUrl) return;
+  const selector = 'rich-textarea .ql-editor, .text-input-field_textarea .ql-editor, .ql-editor.textarea.new-input-ui, .ql-editor';
+  const editor = document.querySelector(selector);
+  if (!editor) {
+    console.warn('Gemini editor not found using selector:', selector);
+    return;
+  }
+  editor.focus();
+  const file = dataUrlToFile(dataUrl, 'page.png');
+  injectImageFile(editor, file, opts);
+}
+
+function dataUrlToFile(dataUrl, fileName) {
+  const parts = dataUrl.split(',');
+  const mime = parts[0].match(/data:(.*);base64/)?.[1] || 'image/png';
+  const binary = atob(parts[1] || '');
+  const array = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    array[i] = binary.charCodeAt(i);
+  }
+  return new File([array], fileName, { type: mime });
 }
 
 function injectImageFile(editor, file, opts) {
