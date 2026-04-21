@@ -4,6 +4,70 @@ document.addEventListener('DOMContentLoaded', function () {
   const uploadBtn = document.getElementById('uploadPdfBtn');
   const statusEl = document.getElementById('status');
   const doSendEl = document.getElementById('doSend');
+  const pdfUploadArea = document.getElementById('pdfUploadArea');
+  const fileNameDisplay = document.getElementById('fileName');
+
+  function updateStatus(msg, isError) {
+    statusEl.textContent = msg;
+    statusEl.style.color = isError ? '#c00' : '#080';
+  }
+
+  // ===== PDF 上傳區域事件 =====
+  function displayFileName(name) {
+    if (name) {
+      fileNameDisplay.textContent = '✓ ' + name;
+      fileNameDisplay.classList.add('active');
+    } else {
+      fileNameDisplay.textContent = '';
+      fileNameDisplay.classList.remove('active');
+    }
+  }
+
+  // 點擊上傳區域打開文件選擇
+  pdfUploadArea.addEventListener('click', function () {
+    pdfFileInput.click();
+  });
+
+  // 文件選擇後顯示名稱
+  pdfFileInput.addEventListener('change', function (e) {
+    if (e.target.files[0]) {
+      displayFileName(e.target.files[0].name);
+    }
+  });
+
+  // 拖放事件
+  ['dragenter', 'dragover'].forEach(eventName => {
+    pdfUploadArea.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      pdfUploadArea.classList.add('dragging-over');
+    }, false);
+  });
+
+  ['dragleave', 'drop'].forEach(eventName => {
+    pdfUploadArea.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      pdfUploadArea.classList.remove('dragging-over');
+    }, false);
+  });
+
+  // 處理拖放文件
+  pdfUploadArea.addEventListener('drop', (e) => {
+    const files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+      const pdfFile = Array.from(files).find(f => f.type === 'application/pdf' || f.name.endsWith('.pdf'));
+      if (pdfFile) {
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(pdfFile);
+        pdfFileInput.files = dataTransfer.files;
+        displayFileName(pdfFile.name);
+        pdfFileInput.dispatchEvent(new Event('change', { bubbles: true }));
+      } else {
+        updateStatus('請拖放 PDF 檔案', true);
+      }
+    }
+  }, false);
 
   function updateStatus(msg, isError) {
     statusEl.textContent = msg;

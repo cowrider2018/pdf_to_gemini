@@ -15,8 +15,8 @@
     <div class="header">
       <div class="title-icon">📖</div>
       <div>
-        <h1 class="main-title">PDF 知識庫</h1>
-        <p class="subtitle">智慧文檔轉換工具</p>
+        <h1 class="main-title">幫你讀PDF</h1>
+        <p class="subtitle">批量上傳工具</p>
       </div>
     </div>
     
@@ -28,8 +28,15 @@
       <!-- PDF 檔案選擇 -->
       <div class="field">
         <label class="label-icon">📄 本地 PDF 檔案</label>
-        <div class="input-wrapper">
-          <input id="pdfFile" type="file" accept="application/pdf" />
+        <!-- 隱藏的原生輸入框 -->
+        <input id="pdfFile" type="file" accept="application/pdf" style="display: none;" />
+        
+        <!-- 美化的拖放上傳區域 -->
+        <div id="pdfUploadArea" class="pdf-upload-area">
+          <div class="upload-icon">📁</div>
+          <p class="upload-text">拖放 PDF 檔案到此</p>
+          <p class="upload-subtext">或點擊選擇</p>
+          <div id="fileName" class="file-name"></div>
         </div>
       </div>
       
