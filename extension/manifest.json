@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Gemini Injector",
+  "version": "0.1.0",
+  "description": "Inject text into the Gemini input box via a popup or page event.",
+  "permissions": [
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://gemini.google.com/*",
+    "https://*.google.com/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Gemini Injector"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://gemini.google.com/*", "https://*.google.com/*"],
+      "js": ["content_script.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

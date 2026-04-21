@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gemini Injector</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h3>Gemini Injector</h3>
+    <textarea id="text" placeholder="輸入要貼到 Gemini 的文字..." rows="6"></textarea>
+    <div class="controls">
+      <label><input type="checkbox" id="doSend" checked> 送出（Send）</label>
+      <button id="sendBtn">送出</button>
+    </div>
+    <div id="status" class="status"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
