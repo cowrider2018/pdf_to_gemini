@@ -255,6 +255,16 @@ body {
   transition: all 0.2s ease;
 }
 
+/* 隱藏/顯示輔助提示語 textarea */
+.prompt-input.collapsed {
+  display: none;
+}
+
+/* 可點擊的 label 樣式 */
+.label-icon[role="button"] {
+  cursor: pointer;
+}
+
 .prompt-actions {
   display: flex;
   justify-content: flex-end;

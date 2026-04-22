@@ -40,6 +40,39 @@ document.addEventListener('DOMContentLoaded', function () {
   // 載入時自動填入預設提示
   helperPromptInput.value = DEFAULT_PROMPT;
 
+  // 預設將輔助提示關閉（隱藏 textarea）
+  const helperLabel = document.getElementById('helperLabel');
+  if (helperPromptInput) {
+    helperPromptInput.classList.add('collapsed');
+  }
+
+  // 切換顯示輔助提示的函式
+  function toggleHelperPrompt() {
+    if (!helperPromptInput || !helperLabel) return;
+    const isCollapsed = helperPromptInput.classList.toggle('collapsed');
+    helperLabel.setAttribute('aria-expanded', String(!isCollapsed));
+    // 調整 popup 高度以符合內容
+    try {
+      const container = document.querySelector('.container');
+      if (container) {
+        const newHeight = container.scrollHeight + 16;
+        document.documentElement.style.height = newHeight + 'px';
+        document.body.style.height = newHeight + 'px';
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  // 點擊與鍵盤事件支援
+  if (helperLabel) {
+    helperLabel.addEventListener('click', toggleHelperPrompt);
+    helperLabel.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleHelperPrompt();
+      }
+    });
+  }
+
   function fallbackInjectTextToTab(tabId, promptText, callback) {
     chrome.scripting.executeScript(
       {
