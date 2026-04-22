@@ -26,10 +26,10 @@ python -m venv .venv
 
 2) 安裝 Python 相依
 
-- 進入 `selenium` 資料夾並安裝：
+- 進入 `server` 資料夾並安裝：
 
 ```powershell
-cd selenium
+cd server
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
@@ -59,7 +59,7 @@ PowerShell（在專案根目錄）:
 ```powershell
 python -m venv .venv
 & .\.venv\Scripts\Activate.ps1
-cd selenium
+cd server
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 python pdf_server.py
